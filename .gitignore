@@ -1,0 +1,25 @@
+# Quartus generated directories
+/db/
+/incremental_db/
+/output_files/
+
+# Backup files
+*.bak
+
+# Quartus temporary files
+*.qws
+*.smsg
+
+# Generated reports
+*.rpt
+*.summary
+
+# FPGA programming outputs
+*.sof
+*.pof
+*.jic
+
+# Simulation generated files
+*.vcd
+*.wlf
+*.fst
