@@ -6,7 +6,7 @@
 | Huy | Code controller + bọc Avalon bus, thiết kế testbench kiểm tra kết quả, code phần mềm điều khiển. |
 
 
-Mở `FFT_128.qpf` trong Quartus. Module top level là `fft128_datapath`. Input đầu vào chỉ nhận so thực 16 bit.Dữ liệu Q8.8 có dấu, mỗi thành phần rộng 16 bit. Từ stage 2 đến stage 7, mỗi mẫu phức được đóng gói thành `{re[15:0], im[15:0]}`. 
+Mở `FFT_128.qpf` trong Quartus. Module top level là `fft128_datapath`. Input đầu vào chỉ nhận số thực 16 bit. Dữ liệu Q8.8 có dấu, mỗi thành phần rộng 16 bit. Từ stage 2 đến stage 7, mỗi mẫu phức được đóng gói thành `{re[15:0], im[15:0]}`. 
 
 ## Các file trong project
 
