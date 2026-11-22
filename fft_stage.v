@@ -50,7 +50,7 @@ module fft_stage #(
         .out(mux_re)
     );
 
-    // sel_add = 1: a + b; sel_add = 0: a - b.
+    // sel_add = 1: a + b; sel_add = 0: b - a.
     r2_butterfly #(
         .DATA_W(16)
     ) u_butterfly (
