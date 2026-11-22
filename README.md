@@ -1,4 +1,4 @@
-# FFT128 SFF radix-2² với giao tiếp Avalon-MM
+# FFT128 SFF radix-2²
 
 Dự án thực hiện FFT 128 điểm cho dữ liệu đầu vào thực, gồm 7 tầng butterfly radix-2 được tổ chức thành ba cặp radix-2² và một tầng radix-2 cuối. Top hiện tại của Quartus là `fft128_avalon`, bọc lõi `fft128` bằng giao tiếp Avalon-MM 32-bit và bộ đệm từng khung 128 mẫu.
 
