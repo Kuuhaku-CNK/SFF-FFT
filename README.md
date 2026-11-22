@@ -12,8 +12,6 @@ Dự án thực hiện FFT 128 điểm cho dữ liệu đầu vào thực, gồm
 
 ## Các file Verilog dùng để tổng hợp
 
-Có 14 file `.v` trong danh sách nguồn của `FFT_128.qsf`.
-
 | File | Module | Mô tả chức năng |
 | --- | --- | --- |
 | [fft128_avalon.v](fft128_avalon.v) | `fft128_avalon` | Top giao tiếp Avalon-MM 32-bit. Chứa bộ đệm vào `128 × 16-bit`, bộ đệm ra `128 × 32-bit`, các thanh ghi điều khiển/trạng thái và FSM `IDLE → PRIME → RUN`. Nhận đủ 128 mẫu trước START, cấp một mẫu mỗi chu kỳ cho lõi, sau đó cấp 0 để đẩy hết kết quả ra. Dùng `waitrequest` để điều tiết giao dịch bus. |
