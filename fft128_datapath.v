@@ -14,13 +14,29 @@ module fft128_datapath (
     output wire signed [15:0] y_im
 );
     // Complex buses pack {real[15:0], imag[15:0]}.
-    wire [31:0] s1_out, s2_out, s3_out, s4_out, s5_out, s6_out;
+    wire [31:0] s2_out, s4_out, s6_out;
+    wire [31:0] s1_rot, s3_rot, s5_rot;
+    reg  [31:0] s1_out, s3_out, s5_out;
     wire [31:0] s2_bf, s3_bf, s4_bf, s5_bf, s6_bf;
+
+    // The odd-stage rotators have one output register. Each general
+    // twiddle rotator has one register at its input and one at its output.
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            s1_out <= 32'd0;
+            s3_out <= 32'd0;
+            s5_out <= 32'd0;
+        end else begin
+            s1_out <= s1_rot;
+            s3_out <= s3_rot;
+            s5_out <= s5_rot;
+        end
+    end
 
     fft_stage #(.SR_LENGTH(64)) u_stage1 (
         .clk(clk), .rst_n(rst_n), .data_in(data_in),
         .sel_mux(sel_mux[0]), .sel_add(sel_add[0]), .rot_mode(rot_mode_s1),
-        .y_re(s1_out[31:16]), .y_im(s1_out[15:0])
+        .y_re(s1_rot[31:16]), .y_im(s1_rot[15:0])
     );
 
     // Stage 2: two 32-sample complex delays and W128.
@@ -30,7 +46,7 @@ module fft128_datapath (
         .data_out(s2_bf)
     );
     fft_twiddle_rotate u_rot_s2 (
-        .rst_n(rst_n), .addr(k_w128),
+        .clk(clk), .rst_n(rst_n), .addr(k_w128),
         .data_in(s2_bf), .data_out(s2_out)
     );
 
@@ -42,7 +58,7 @@ module fft128_datapath (
     );
     trivial_rotator #(.DATA_W(16)) u_rot_s3 (
         .x_re(s3_bf[31:16]), .x_im(s3_bf[15:0]), .mode(rot_mode_s3),
-        .y_re(s3_out[31:16]), .y_im(s3_out[15:0])
+        .y_re(s3_rot[31:16]), .y_im(s3_rot[15:0])
     );
 
     // Stage 4: two 8-sample complex delays and W32.
@@ -52,7 +68,7 @@ module fft128_datapath (
         .data_out(s4_bf)
     );
     fft_twiddle_rotate u_rot_s4 (
-        .rst_n(rst_n), .addr({k_w32, 2'b00}),
+        .clk(clk), .rst_n(rst_n), .addr({k_w32, 2'b00}),
         .data_in(s4_bf), .data_out(s4_out)
     );
 
@@ -64,7 +80,7 @@ module fft128_datapath (
     );
     trivial_rotator #(.DATA_W(16)) u_rot_s5 (
         .x_re(s5_bf[31:16]), .x_im(s5_bf[15:0]), .mode(rot_mode_s5),
-        .y_re(s5_out[31:16]), .y_im(s5_out[15:0])
+        .y_re(s5_rot[31:16]), .y_im(s5_rot[15:0])
     );
 
     // Stage 6: two 2-sample complex delays and W8.
@@ -74,7 +90,7 @@ module fft128_datapath (
         .data_out(s6_bf)
     );
     fft_twiddle_rotate u_rot_s6 (
-        .rst_n(rst_n), .addr({k_w8, 4'b0000}),
+        .clk(clk), .rst_n(rst_n), .addr({k_w8, 4'b0000}),
         .data_in(s6_bf), .data_out(s6_out)
     );
 

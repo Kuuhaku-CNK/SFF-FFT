@@ -1,16 +1,3 @@
-// Avalon-MM slave for one buffered, real-input FFT128 frame at a time.
-// avs_address uses WORD addresses. Software byte offsets are shown below.
-// 0x00 CONTROL: bit 0 START, bit 1 SOFT_RESET, bit 2 CLEAR_FLAGS (write pulses).
-// 0x04 STATUS : bit 0 BUSY, bit 1 DONE, bit 2 IN_FULL,
-//               bit 3 OUT_READY, bit 4 ERROR.
-// 0x08 INPUT_COUNT : number of loaded samples, 0..128.
-// 0x0c OUTPUT_COUNT: number of unread results, 0..128.
-// 0x10 DATA_IN : write one real Q8.8 sample in bits [15:0].
-// 0x14 DATA_OUT: read one {real[15:0], imaginary[15:0]} Q8.8 result.
-// Results retain the core's 1/128 scaling and bit-reversed bin order.
-// DATA_IN stalls while busy, full, or previous results remain unread.
-// DATA_OUT stalls while empty. Poll STATUS before accessing these data ports.
-// All reads use waitrequest with one preparation cycle, no readdatavalid.
 module fft128_avalon (
     input  wire        clk,
     input  wire        reset_n,
