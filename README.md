@@ -1,4 +1,4 @@
-# FFT128 SFF radix-2² với giao tiếp Avalon-MM
+# FFT128 SFF radix-2²
 
 Dự án thực hiện FFT 128 điểm cho dữ liệu đầu vào thực, gồm 7 tầng butterfly radix-2 được tổ chức thành ba cặp radix-2² và một tầng radix-2 cuối. Top hiện tại của Quartus là `fft128_avalon`, bọc lõi `fft128` bằng giao tiếp Avalon-MM 32-bit và bộ đệm từng khung 128 mẫu.
 
@@ -11,8 +11,6 @@ Dự án thực hiện FFT 128 điểm cho dữ liệu đầu vào thực, gồm
 `FFT_128.qsf` chọn `fft128_avalon.v` làm top. Wrapper này gọi lõi `fft128.v`;
 
 ## Các file Verilog dùng để tổng hợp
-
-Có 14 file `.v` trong danh sách nguồn của `FFT_128.qsf`.
 
 | File | Module | Mô tả chức năng |
 | --- | --- | --- |
